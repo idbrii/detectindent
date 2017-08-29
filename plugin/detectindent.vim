@@ -44,6 +44,16 @@ fun! <SID>IsCommentEnd(line)
     return <SID>HasCStyleComments() && a:line =~ '\*/'
 endfun
 
+fun! s:HasCommentSyntax(line_number, line_text) " {{{1
+    " Some languages (lua) don't define space before a comment as part of the
+    " comment so look at the first nonblank character.
+    let nonblank_col = substitute(a:line_text, "^\s*\zs.*", "", "")
+    let transparent = 1
+    let id = synID(a:line_number, len(nonblank_col), transparent)
+    let syntax = synIDattr(id, 'name')
+    return syntax =~? 'string\|comment'
+endfun
+
 fun! <SID>IsCommentLine(line)
     return <SID>HasCStyleComments() && a:line =~ '^\s\+//'
 endfun
@@ -114,7 +124,7 @@ fun! <SID>DetectIndent()
         endif
 
         " Skip comment lines since they are not dependable.
-        if <SID>IsCommentLine(l:line)
+        if <SID>IsCommentLine(l:line) || s:HasCommentSyntax(l:idx, l:line)
             let l:idx = l:idx + 1
             continue
         endif
