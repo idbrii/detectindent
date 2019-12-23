@@ -20,6 +20,12 @@
 "                " To use preferred values instead of guessing:
 "                :let g:detectindent_preferred_when_mixed = 1
 "
+"                " To reduce the number of lines inspected:
+"                :let g:detectindent_max_lines_to_analyse = 100
+"
+"                " To ignore comment lines via syntax (slow but accurate):
+"                :let g:detectindent_check_comment_syntax = 1
+"
 " Requirements:  Untested on Vim versions below 6.2
 
 if exists("loaded_detectindent")
@@ -30,6 +36,9 @@ let loaded_detectindent = 1
 if !exists('g:detectindent_verbosity')
     let g:detectindent_verbosity = 1
 endif
+
+let g:detectindent_check_comment_syntax = get(g:, 'detectindent_check_comment_syntax', 0)
+
 
 fun! <SID>HasCStyleComments()
     return index(["c", "cpp", "java", "javascript", "php", "vala"], &ft) != -1
@@ -45,6 +54,10 @@ fun! <SID>IsCommentEnd(line)
 endfun
 
 fun! s:HasCommentSyntax(line_number, line_text) " {{{1
+    if !g:detectindent_check_comment_syntax
+        return 0
+    endif
+    
     " Some languages (lua) don't define space before a comment as part of the
     " comment so look at the first nonblank character.
     let nonblank_col = substitute(a:line_text, "^\s*\zs.*", "", "")
