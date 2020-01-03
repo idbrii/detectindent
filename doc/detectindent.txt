@@ -7,8 +7,8 @@ Author:  Ciaran McCreesh <ciaran.mccreesh at googlemail.com>
 
     1. Contents                                    |detectindent-contents|
     2. :DetectIndent Command                               |:DetectIndent|
-	Settings                                   |detectindent-settings|
-    3. Uptime ChangeLog                                 |uptime-changelog|
+    3. Settings                                    |detectindent-settings|
+    4. ChangeLog                                  |detectindent-changelog|
 
 ==============================================================================
 2. :DetectIndent Command				       *:DetectIndent*
@@ -17,49 +17,51 @@ Author:  Ciaran McCreesh <ciaran.mccreesh at googlemail.com>
 	'expandtab' and 'tabstop' options based upon the existing settings in
 	use in the active file.
 
-    Settings					       *detectindent-settings*
+3. Settings					       *detectindent-settings*
 
+                                            *detectindent_preferred_expandtab*
 	When the correct value for 'expandtab' cannot be determined, it will
 	usually retain its existing value. To specify that 'expandtab' should
 	be used where autodetection is impossible, set: >
 		:let g:detectindent_preferred_expandtab = 1
-<	in your |vimrc| file.
-
+<
+                                               *detectindent_preferred_indent*
 	To set a preferred value for 'shiftwidth' and 'tabstop' when they
 	cannot be automatically detected, set: >
 		:let g:detectindent_preferred_indent = 4
-<	in your |vimrc| file.
-
+<
+                                           *detectindent_preferred_when_mixed*
 	To use the preferred values when both tabs and spaces are detected,
 	set: >
 		:let g:detectindent_preferred_when_mixed = 1
-<	in your |vimrc| file.
-
+<
+                                           *detectindent_max_lines_to_analyse*
 	To set limit for number of lines that will be analysed set: >
 		:let g:detectindent_max_lines_to_analyse = 1024
-<	in your |vimrc| file. Low values will improve performance at the cost
-        of accuracy.
+<        Low values will improve performance at the cost of accuracy.
 
+                                           *detectindent_check_comment_syntax*
         To ignore indent in comments by checking vim's syntax highlighting to
         improve accuracy at a significant speed penalty: >
                 :let g:detectindent_check_comment_syntax = 1
-<	in your |vimrc| file.
+<
+                                                *detectindent-buffer-settings*
+        The above settings can be overridden for specific filetypes by
+        settings them as |buffer-variable|s. For example, to override
+        |detectindent_preferred_expandtab| to use 4-character tabstops with
+        tabs for python) create after/ftplugin/python.vim with: >
+		:let b:detectindent_preferred_expandtab = 0
+	    	:let b:detectindent_preferred_indent = 4
+<	Using 0 acts as if the option was never set.
 
+                                             *detectindent_comments_blacklist*
         DetectIndent uses vim's 'comments' variable to find and ignore
         comments. To ignore this variable when detecting comments for a
         filetype, you can add the filetype to this variable (example to ignore
         in python files): >
                 :let g:detectindent_comments_blacklist = ['python']
-<        You'll probably want to enable |detectindent_check_comment_syntax| so
-        indentation in comments is ignored.
-
-	To override |detectindent_preferred_expandtab| for specific filetypes
-	(example: use 4-character tabstops with tabs for python) set: >
-		:let b:detectindent_preferred_expandtab = 0
-	    	:let b:detectindent_preferred_indent = 4
-<	after/ftplugin/FILETYPENAMEHERE.vim (example:
-	after/ftplugin/python.vim). Using 0 acts as if the option was never
-	set.
+<        You'll probably want to enable |detectindent_check_comment_syntax| in
+        buffers with this filetype so indentation in comments is ignored.
 
 ==============================================================================
 3. DetectIndent ChangeLog			      *detectindent-changelog*
@@ -69,10 +71,10 @@ Author:  Ciaran McCreesh <ciaran.mccreesh at googlemail.com>
             * Turn off syntax detection for comments by default.
         v1.2 (2017-08-29)
             * Add syntax detection for comments.
-	v1.1 (20150225)
+	v1.1 (2015-02-25)
 	    * Add preferred_when_mixed.
 	    * Add buffer-local options.
-	v1.0 (20050105)
+	v1.0 (2005-01-05)
 	    * initial release after discussion on irc.freenode.net:#vim
 
 ==============================================================================
