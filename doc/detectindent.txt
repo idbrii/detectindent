@@ -18,6 +18,14 @@ Commands                                               *detectindent-commands*
 :DetectIndent
     Intelligently set the 'shiftwidth', 'expandtab' and 'tabstop' options
     based upon the whitespace in the active file.
+    Run it manually or add to an |ftplugin| to detect for specific filetypes.
+
+                         				   *:AutoDetectIndent*
+:AutoDetectIndent
+    The :AutoDetectIndent command will auto run `:DetectIndent` on every
+    modifiable file you open.
+    Add it to your vimrc to always match the indentation in files you're
+    editing.
 
 ==============================================================================
 Settings                                               *detectindent-settings*

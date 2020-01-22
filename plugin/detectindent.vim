@@ -309,5 +309,19 @@ fun! <SID>DetectIndent()
     endif
 endfun
 
+function! s:DetectIfEditable()
+    if !exists("b:detectindent_has_tried_to_detect") && !&readonly && &modifiable
+        DetectIndent
+        let b:detectindent_has_tried_to_detect = 1
+    endif
+endf
+function! s:SetupDetectionAutocmd()
+    augroup DetectIndent
+        autocmd!
+        autocmd BufReadPost * call s:DetectIfEditable()
+    augroup END
+endf
+
 command! -bar -nargs=0 DetectIndent call <SID>DetectIndent()
+command! -bar -nargs=0 AutoDetectIndent call <SID>SetupDetectionAutocmd()
 
