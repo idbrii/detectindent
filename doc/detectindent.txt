@@ -1,6 +1,7 @@
 *detectindent.txt*	Match the indent style in existing files
 
-Author:  Ciaran McCreesh <ciaran.mccreesh at googlemail.com>
+Maintainer:  David Briscoe https://github.com/idbrii/detectindent
+Original Author:  Ciaran McCreesh <ciaran.mccreesh at googlemail.com>
 
 ==============================================================================
 Contents                                  *detectindent* *detectindent-contents*
@@ -70,6 +71,7 @@ Changelog                                             *detectindent-changelog*
             * Add 'comments' support.
             * Turn off syntax detection for comments by default.
         v1.2 (2017-08-29)
+            * fork to https://github.com/idbrii/detectindent
             * Add syntax detection for comments.
 	v1.1 (2015-02-25)
 	    * Add preferred_when_mixed.
