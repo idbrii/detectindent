@@ -1,70 +1,70 @@
-*detectindent.txt*	The Detect Indent Plugin	     1.0, Jan 04, 2005
+*detectindent.txt*	Match the indent style in existing files
 
 Author:  Ciaran McCreesh <ciaran.mccreesh at googlemail.com>
 
 ==============================================================================
-1. Contents				*detectindent* *detectindent-contents*
+Contents                                  *detectindent* *detectindent-contents*
 
-    1. Contents                                    |detectindent-contents|
-    2. :DetectIndent Command                               |:DetectIndent|
-    3. Settings                                    |detectindent-settings|
-    4. ChangeLog                                  |detectindent-changelog|
+    Contents                                           |detectindent-contents|
+    Commands                                           |detectindent-commands|
+    Settings                                           |detectindent-settings|
+    Changelog                                         |detectindent-changelog|
 
 ==============================================================================
-2. :DetectIndent Command				       *:DetectIndent*
+Commands                                               *detectindent-commands*
 
-	The :DetectIndent command tries to intelligently set the 'shiftwidth',
-	'expandtab' and 'tabstop' options based upon the existing settings in
-	use in the active file.
+                                                               *:DetectIndent*
+:DetectIndent
+    Intelligently set the 'shiftwidth', 'expandtab' and 'tabstop' options
+    based upon the whitespace in the active file.
 
-3. Settings					       *detectindent-settings*
+==============================================================================
+Settings                                               *detectindent-settings*
 
                                             *detectindent_preferred_expandtab*
-	When the correct value for 'expandtab' cannot be determined, it will
-	usually retain its existing value. To specify that 'expandtab' should
-	be used where autodetection is impossible, set: >
-		:let g:detectindent_preferred_expandtab = 1
+    When the correct value for 'expandtab' cannot be determined, it will
+    usually retain its existing value. To specify that 'expandtab' should be
+    used where autodetection is impossible, set: >
+        :let g:detectindent_preferred_expandtab = 1
 <
                                                *detectindent_preferred_indent*
-	To set a preferred value for 'shiftwidth' and 'tabstop' when they
-	cannot be automatically detected, set: >
-		:let g:detectindent_preferred_indent = 4
+    To set a preferred value for 'shiftwidth' and 'tabstop' when they cannot
+    be automatically detected, set: >
+        :let g:detectindent_preferred_indent = 4
 <
                                            *detectindent_preferred_when_mixed*
-	To use the preferred values when both tabs and spaces are detected,
-	set: >
-		:let g:detectindent_preferred_when_mixed = 1
+    To use the preferred values when both tabs and spaces are detected, set: >
+        :let g:detectindent_preferred_when_mixed = 1
 <
                                            *detectindent_max_lines_to_analyse*
-	To set limit for number of lines that will be analysed set: >
-		:let g:detectindent_max_lines_to_analyse = 1024
-<        Low values will improve performance at the cost of accuracy.
+    To set limit for number of lines that will be analysed set: >
+        :let g:detectindent_max_lines_to_analyse = 1024
+<    Low values will improve performance at the cost of accuracy.
 
                                            *detectindent_check_comment_syntax*
-        To ignore indent in comments by checking vim's syntax highlighting to
-        improve accuracy at a significant speed penalty: >
-                :let g:detectindent_check_comment_syntax = 1
+    To ignore indent in comments by checking vim's syntax highlighting to
+    improve accuracy at a significant speed penalty: >
+            :let g:detectindent_check_comment_syntax = 1
 <
                                                 *detectindent-buffer-settings*
-        The above settings can be overridden for specific filetypes by
-        settings them as |buffer-variable|s. For example, to override
-        |detectindent_preferred_expandtab| to use 4-character tabstops with
-        tabs for python) create after/ftplugin/python.vim with: >
-		:let b:detectindent_preferred_expandtab = 0
-	    	:let b:detectindent_preferred_indent = 4
-<	Using 0 acts as if the option was never set.
+    The above settings can be overridden for specific filetypes by settings
+    them as |buffer-variable|s. For example, to override
+    |detectindent_preferred_expandtab| to use 4-character tabstops with tabs
+    for python) create after/ftplugin/python.vim with: >
+            :let b:detectindent_preferred_expandtab = 0
+            :let b:detectindent_preferred_indent = 4
+<    Using 0 acts as if the option was never set.
 
                                              *detectindent_comments_blacklist*
-        DetectIndent uses vim's 'comments' variable to find and ignore
-        comments. To ignore this variable when detecting comments for a
-        filetype, you can add the filetype to this variable (example to ignore
-        in python files): >
-                :let g:detectindent_comments_blacklist = ['python']
-<        You'll probably want to enable |detectindent_check_comment_syntax| in
-        buffers with this filetype so indentation in comments is ignored.
+    DetectIndent uses vim's 'comments' variable to find and ignore comments.
+    To ignore this variable when detecting comments for a filetype, you can
+    add the filetype to this variable (example to ignore in python files): >
+            :let g:detectindent_comments_blacklist = ['python']
+<    You'll probably want to enable |detectindent_check_comment_syntax| in
+    buffers with this filetype so indentation in comments is ignored.
 
 ==============================================================================
-3. DetectIndent ChangeLog			      *detectindent-changelog*
+Changelog                                             *detectindent-changelog*
 
         v1.3 (2020-01-02)
             * Add 'comments' support.
