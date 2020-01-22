@@ -10,3 +10,6 @@ file.
 
 Provides an `:AutoDetectIndent` command to automatically run `:DetectIndent`
 for all modifiable files.
+
+For more details, see [the
+documentation](https://raw.githubusercontent.com/idbrii/detectindent/master/doc/detectindent.txt).
