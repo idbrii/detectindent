@@ -101,10 +101,13 @@ function! s:GetCommentMarkers()
             endfor
 
             let comment_start = get(dict, 's', '')
-            if len(comment_start) > 0
-                " Start and end should always exist together.
+            let comment_end   = get(dict, 'e', '')
+            if len(comment_start) > 0 && len(comment_end) > 0
+                " Only accept block if we have both start and end. Default
+                " make.vim only sets s,m,b (for bullet lists). Probably
+                " omitted e because it didn't add anything.
                 let b:detectindent_comment_markers.start = comment_start
-                let b:detectindent_comment_markers.end = dict.e
+                let b:detectindent_comment_markers.end = comment_end
                 let b:detectindent_comment_markers.has_block = 1
             endif
 
