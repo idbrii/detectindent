@@ -50,10 +50,10 @@ Settings                                               *detectindent-settings*
         :let g:detectindent_max_lines_to_analyse = 1024
 <    Low values will improve performance at the cost of accuracy.
 
-                                           *detectindent_check_comment_syntax*
-    To ignore indent in comments by checking vim's syntax highlighting to
-    improve accuracy at a significant speed penalty: >
-            :let g:detectindent_check_comment_syntax = 1
+						   *detectindent_check_syntax*
+    Ignore indent in comments and multi-line strings by checking vim's
+    syntax highlighting to improve accuracy at a significant speed penalty: >
+            :let g:detectindent_check_syntax = 1
 <
                                                 *detectindent-buffer-settings*
     The above settings can be overridden for specific filetypes by settings
@@ -69,12 +69,15 @@ Settings                                               *detectindent-settings*
     To ignore this variable when detecting comments for a filetype, you can
     add the filetype to this variable (example to ignore in python files): >
             :let g:detectindent_comments_blacklist = ['python']
-<    You'll probably want to enable |detectindent_check_comment_syntax| in
+<    You'll probably want to enable |detectindent_check_syntax| in
     buffers with this filetype so indentation in comments is ignored.
 
 ==============================================================================
 Changelog                                             *detectindent-changelog*
 
+        v1.4 (2022-01-11)
+            * Rename detectindent_check_comment_syntax ->
+	    * detectindent_check_syntax
         v1.3 (2020-01-02)
             * Add 'comments' support.
             * Turn off syntax detection for comments by default.

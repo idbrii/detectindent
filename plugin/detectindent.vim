@@ -1,5 +1,5 @@
 " Name:          detectindent (global plugin)
-" Version:       1.0
+" Version:       1.4
 " Author:        Ciaran McCreesh <ciaran.mccreesh at googlemail.com>
 " Updates:       http://github.com/ciaranm/detectindent
 " Purpose:       Detect file indent settings
@@ -34,8 +34,14 @@ if !exists('g:detectindent_verbosity')
     let g:detectindent_verbosity = 1
 endif
 
+if exists('g:detectindent_check_comment_syntax')
+    echo "detectindent_check_comment_syntax is deprecated. Use detectindent_check_syntax."
+    let g:detectindent_check_syntax = g:detectindent_check_comment_syntax
+    unlet g:detectindent_check_comment_syntax
+endif
+
 " Ignore comment lines via syntax (slow but accurate):
-let g:detectindent_check_comment_syntax = get(g:, 'detectindent_check_comment_syntax', 0)
+let g:detectindent_check_syntax = get(g:, 'detectindent_check_syntax', 0)
 
 " Ignore 'comments' when detecting comment blocks.
 let g:detectindent_comments_blacklist = get(g:, 'detectindent_comments_blacklist', [])
@@ -127,10 +133,10 @@ endf
 "~     return markers.get_matching_marker(a:line)
 "~ endf
 "~ function! Debug_HasCommentSyntax(line_number)
-"~     return s:HasCommentSyntax(a:line_number, getline(a:line_number))
+"~     return s:HasIgnoredSyntax(a:line_number, getline(a:line_number))
 "~ endf
 
-fun! s:HasCommentSyntax(line_number, line_text) " {{{1
+fun! s:HasIgnoredSyntax(line_number, line_text) " {{{1
     " Some languages (lua) don't define space before a comment as part of the
     " comment so look at the first nonblank character.
     let nonblank_col = match(a:line_text, '\S') + 1
@@ -189,7 +195,7 @@ fun! <SID>DetectIndent()
       let b:detectindent_cursettings = {'expandtab': &et, 'shiftwidth': &sw, 'tabstop': &ts, 'softtabstop': &sts}
     endif
     
-    let can_check_syntax = s:GetValue('detectindent_check_comment_syntax')
+    let can_check_syntax = s:GetValue('detectindent_check_syntax')
     let markers = s:GetCommentMarkers()
 
     " There's lots of junk at the start of files that would be nice to skip,
@@ -212,7 +218,7 @@ fun! <SID>DetectIndent()
         endif
 
         " Skip comment lines since they are not dependable.
-        if markers.IsCommentLine(l:line) || (can_check_syntax && s:HasCommentSyntax(l:idx, l:line))
+        if markers.IsCommentLine(l:line) || (can_check_syntax && s:HasIgnoredSyntax(l:idx, l:line))
             let l:idx = l:idx + 1
             continue
         endif
