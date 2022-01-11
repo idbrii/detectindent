@@ -126,13 +126,16 @@ endf
 "~     let markers = s:GetCommentMarkers()
 "~     return markers.get_matching_marker(a:line)
 "~ endf
+"~ function! Debug_HasCommentSyntax(line_number)
+"~     return s:HasCommentSyntax(a:line_number, getline(a:line_number))
+"~ endf
 
 fun! s:HasCommentSyntax(line_number, line_text) " {{{1
     " Some languages (lua) don't define space before a comment as part of the
     " comment so look at the first nonblank character.
-    let nonblank_col = substitute(a:line_text, "^\s*\zs.*", "", "")
+    let nonblank_col = match(a:line_text, '\S') + 1
     let transparent = 1
-    let id = synID(a:line_number, len(nonblank_col), transparent)
+    let id = synID(a:line_number, nonblank_col, transparent)
     let syntax = synIDattr(id, 'name')
     return syntax =~? 'string\|comment'
 endfun
